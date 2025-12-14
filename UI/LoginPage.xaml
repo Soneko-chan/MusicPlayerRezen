@@ -1,0 +1,85 @@
+<Page x:Class="UI.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:helpers="clr-namespace:UI.Helpers"
+      Title="LoginPage">
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="1" Background="{DynamicResource SecondaryColorBrush}"
+                Margin="50" CornerRadius="15" Padding="40">
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="300">
+
+                <!-- Логотип -->
+                <TextBlock Text="🎵" FontSize="60"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,20"
+                           Foreground="{DynamicResource TextColorBrush}"/>
+
+                <TextBlock Text="Вход в аккаунт"
+                           FontSize="24" FontWeight="Bold"
+                           Foreground="{DynamicResource TextColorBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
+
+                <!-- Поле логина -->
+                <TextBlock Text="Логин" Margin="0,0,0,5"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColorBrush}"/>
+                <TextBox Name="LoginTextBox"
+                         Style="{StaticResource StandardTextBoxStyle}"
+                         Margin="0,0,0,15"
+                         Padding="15,10"/>
+
+                <!-- Поле пароля -->
+                <TextBlock Text="Пароль" Margin="0,0,0,5"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextColorBrush}"/>
+                <PasswordBox Name="PasswordBox"
+                             helpers:PasswordBoxHelper.Attach="True"
+                             Style="{StaticResource StandardPasswordBoxStyle}"
+                             Margin="0,0,0,15"
+                             Padding="15,10"/>
+
+                <!-- Кнопка входа -->
+                <Button Content="Войти"
+                        Name="LoginButton"
+                        Style="{DynamicResource StandardButtonStyle}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,0,20"
+                        Padding="15,12"
+                        FontSize="16" Click="LoginButton_Click"/>
+
+                <!-- Ссылки -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Нет аккаунта? "
+                               Foreground="{DynamicResource TextColorBrush}"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="Зарегистрироваться"
+                               Foreground="{DynamicResource TextColorBrush}"
+                               Cursor="Hand" MouseLeftButtonUp="RegisterClick">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="TextDecorations"
+                                                Value="Underline"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+
+                
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

@@ -1,0 +1,67 @@
+<Page x:Class="UI.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="SettingsPage">
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Настройки"
+                   FontSize="28" FontWeight="Bold"
+                   Foreground="{DynamicResource TextColorBrush}"
+                   Margin="30,20,30,20"
+                   HorizontalAlignment="Left"/>
+
+        <ScrollViewer Grid.Row="1" Margin="30,0,30,30">
+            <StackPanel>
+
+                <!-- Тема оформления -->
+                <Border Background="{DynamicResource SecondaryColorBrush}"
+                        Margin="0,0,0,20" Padding="20" CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Тема оформления"
+                                   FontSize="18" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   Margin="0,0,0,15"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Светлая тема"
+                                         Name="LightThemeRadio"
+                                         Margin="0,0,20,0"
+                                         Checked="ThemeRadio_Checked"
+                                         Foreground="{DynamicResource TextColorBrush}"/>
+                            <RadioButton Content="Темная тема"
+                                         Name="DarkThemeRadio"
+                                         Checked="ThemeRadio_Checked"
+                                         Foreground="{DynamicResource TextColorBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Импорт музыки -->
+                <Border Background="{DynamicResource SecondaryColorBrush}"
+                        Margin="0,0,0,20" Padding="20" CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Импорт музыки"
+                                   FontSize="18" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   Margin="0,0,0,15"/>
+                        <Button Content="Выбрать директорию с музыкой"
+                                Name="ImportMusicButton"
+                                HorizontalAlignment="Left"
+                                Padding="20,10"
+                                Style="{DynamicResource StandardButtonStyle}"
+                                Click="ImportMusicButton_Click"/>
+                        <TextBlock Name="CurrentImportPathText"
+                                   Text="Текущая директория импорта: не выбрана"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource LightTextColor}"
+                                   Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

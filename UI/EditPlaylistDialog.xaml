@@ -1,0 +1,85 @@
+<Window x:Class="UI.EditPlaylistDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактировать плейлист" 
+        Width="500" 
+        Height="470"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Название плейлиста -->
+        <TextBlock Grid.Row="0" 
+                   Text="Название плейлиста:" 
+                   Margin="0,0,0,5" 
+                   FontWeight="SemiBold"/>
+
+        <TextBox x:Name="PlaylistNameTextBox" 
+                 Grid.Row="1" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Обложка плейлиста -->
+        <TextBlock Grid.Row="2" 
+                   Text="Обложка плейлиста:" 
+                   Margin="0,0,0,5" 
+                   FontWeight="SemiBold"/>
+
+        <!-- Панель для обложки и кнопки выбора -->
+        <StackPanel Grid.Row="3" Orientation="Vertical">
+            <Border Background="{DynamicResource SecondaryColorBrush}"
+                    BorderBrush="{DynamicResource ControlBorderColorBrush}" 
+                    BorderThickness="1"
+                    CornerRadius="8" 
+                    Padding="10" 
+                    Margin="0,0,0,10"
+                    Height="200">
+                <Grid>
+                    <Image x:Name="CoverImage" 
+                           Stretch="Uniform" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Visibility="Visible"/>
+                    <TextBlock x:Name="PlaceholderText" 
+                               Text="Нет обложки" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               FontSize="16" 
+                               Foreground="{DynamicResource LightTextColorBrush}"
+                               Visibility="Collapsed"/>
+                </Grid>
+            </Border>
+
+            <Button x:Name="SelectCoverButton" 
+                    Content="Выбрать обложку" 
+                    Style="{DynamicResource StandardButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Width="150"
+                    Click="SelectCoverButton_Click"/>
+        </StackPanel>
+
+        <!-- Кнопки OK и Отмена -->
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,15,0,0">
+            <Button x:Name="OkButton" 
+                    Content="OK" 
+                    Style="{DynamicResource StandardButtonStyle}" 
+                    Width="80" 
+                    Margin="0,0,10,0"
+                    Click="OkButton_Click"/>
+            <Button x:Name="CancelButton" 
+                    Content="Отмена" 
+                    Style="{DynamicResource StandardButtonStyle}" 
+                    Width="80"
+                    Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

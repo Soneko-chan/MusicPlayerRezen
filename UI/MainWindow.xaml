@@ -1,0 +1,108 @@
+<Window x:Class="UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Rezen" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen" MinWidth="600" MinHeight="500">
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="200" MaxWidth="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Боковая панель с навигацией -->
+        <Border Grid.Column="0" Background="{DynamicResource SecondaryColorBrush}"
+                BorderBrush="{DynamicResource ControlBorderColor}" BorderThickness="0,0,1,0">
+            <StackPanel Margin="10" HorizontalAlignment="Stretch">
+                <Button x:Name="HomeButton" Content="Главная" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="HomeButton_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="PlaylistsButton" Content="Плейлисты" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="PlaylistsButton_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="LibraryButton" Content="Библиотека" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="LibraryButton_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="SettingsButton" Content="Настройки" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="SettingsButton_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="SubscriptionButton" Content="Подписка" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="SubscriptionButton_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="LoginButton" Content="Вход" Style="{DynamicResource StandardButtonStyle}"
+                        Margin="0,5" Click="LoginButton_Click" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Основная область -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Контентная область -->
+            <Frame x:Name="MainFrame" Grid.Row="0" NavigationUIVisibility="Hidden" Margin="10"/>
+
+            <!-- Панель управления воспроизведением -->
+            <Border Grid.Row="1" Background="{DynamicResource SecondaryColorBrush}"
+                    BorderBrush="{DynamicResource ControlBorderColor}" BorderThickness="0,1,0,0" Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Информация о текущем треке -->
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                        <Image x:Name="CurrentTrackCover" Width="40" Height="40" Margin="0,0,10,0"
+                               Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <StackPanel>
+                            <TextBlock x:Name="CurrentTrackTitle" Text="Выберите трек" FontSize="14" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextColorBrush}"
+                                       TextTrimming="CharacterEllipsis" MaxWidth="150"/>
+                            <TextBlock x:Name="CurrentTrackArtist" Text="Исполнитель" FontSize="12"
+                                       Foreground="{DynamicResource LightTextColor}" TextTrimming="CharacterEllipsis" MaxWidth="150"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Кнопки управления и прогресс -->
+                    <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Прогресс-бар и время -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock x:Name="CurrentTimeText" Text="0:00" FontSize="10" VerticalAlignment="Center" Margin="0,0,5,0"
+                                       Foreground="{DynamicResource TextColorBrush}"/>
+                            <Slider x:Name="ProgressSlider" Width="200" Minimum="0" Maximum="100" Value="0"
+                                    VerticalAlignment="Center" Margin="0,0,5,0" MouseDown="ProgressSlider_MouseDown" MouseUp="ProgressSlider_MouseUp"/>
+                            <TextBlock x:Name="TotalTimeText" Text="0:00" FontSize="10" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextColorBrush}"/>
+                        </StackPanel>
+
+                        <!-- Кнопки управления -->
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Name="PreviousTrackButton" Content="⏮" FontSize="16" Width="40" Height="40"
+                                    Style="{DynamicResource StandardButtonStyle}" Click="PreviousTrackButton_Click"/>
+                            <Button x:Name="PlayPauseButton" Content="▶" FontSize="16" Width="50" Height="50"
+                                    Style="{DynamicResource StandardButtonStyle}" Margin="15,0" Click="PlayPauseButton_Click"/>
+                            <Button x:Name="NextTrackButton" Content="⏭" FontSize="16" Width="40" Height="40"
+                                    Style="{DynamicResource StandardButtonStyle}" Click="NextTrackButton_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Управление громкостью -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock Text="🔊" VerticalAlignment="Center" Margin="0,0,5,0"
+                                   Foreground="{DynamicResource TextColorBrush}"/>
+                        <Slider x:Name="VolumeSlider" Width="100" Minimum="0" Maximum="100" Value="10"
+                                VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+
+                    <!-- Отступ справа -->
+                    <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

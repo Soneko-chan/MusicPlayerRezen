@@ -1,0 +1,133 @@
+<Page x:Class="UI.AccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:UI"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="AccountPage">
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок с информацией о пользователе -->
+        <Border Grid.Row="0" Background="{DynamicResource SecondaryColorBrush}"
+                Margin="20" CornerRadius="10" Padding="30">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="{DynamicResource PrimaryColorBrush}"
+                        CornerRadius="50" Width="100" Height="100"
+                        Margin="0,0,20,0">
+                    <TextBlock Text="👤" FontSize="40"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextColorBrush}"/>
+                </Border>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock x:Name="UsernameValue" Text="Имя пользователя"
+                               FontSize="24" FontWeight="Bold"
+                               Foreground="{DynamicResource TextColorBrush}"
+                               TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="LoginValue" Text="Логин"
+                               FontSize="16"
+                               Foreground="{DynamicResource LightTextColor}"
+                               TextTrimming="CharacterEllipsis"/>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,10,0,0">
+                        <TextBlock Text="Статус подписки: "
+                                   Foreground="{DynamicResource TextColorBrush}"/>
+                        <TextBlock x:Name="SubscriptionStatus"
+                                   Text="Не активна"
+                                   FontWeight="SemiBold"
+                                   Foreground="Orange"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Информация об аккаунте -->
+        <ScrollViewer Grid.Row="1" Margin="20,0">
+            <StackPanel>
+                <TextBlock Text="Информация об аккаунте"
+                           FontSize="20" FontWeight="Bold"
+                           Foreground="{DynamicResource TextColorBrush}"
+                           Margin="0,0,0,20"/>
+
+                <Border Background="{DynamicResource ControlBackgroundColor}"
+                        Margin="0,0,0,15" Padding="20" CornerRadius="8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Email:"
+                                   FontSize="14" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   Width="120"/>
+                        <TextBlock Grid.Column="1" x:Name="EmailValue"
+                                   Text="Неизвестно" FontSize="14"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+                </Border>
+
+                <Border Background="{DynamicResource ControlBackgroundColor}"
+                        Margin="0,0,0,15" Padding="20" CornerRadius="8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Дата регистрации:"
+                                   FontSize="14" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   Width="120"/>
+                        <TextBlock Grid.Column="1" x:Name="DateCreatedValue"
+                                   Text="Неизвестно" FontSize="14"
+                                   Foreground="{DynamicResource TextColorBrush}"/>
+                    </Grid>
+                </Border>
+
+                <Border Background="{DynamicResource ControlBackgroundColor}"
+                        Margin="0,0,0,15" Padding="20" CornerRadius="8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Подписка до:"
+                                   FontSize="14" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColorBrush}"
+                                   Width="120"/>
+                        <TextBlock Grid.Column="1" x:Name="SubscriptionExpiryValue"
+                                   Text="Неизвестно" FontSize="14"
+                                   Foreground="{DynamicResource TextColorBrush}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,0,0,30">
+            <Button x:Name="LogoutButton" Content="Выйти из аккаунта"
+                    Style="{DynamicResource StandardButtonStyle}"
+                    Margin="0,0,15,0" Padding="20,10"
+                    Click="LogoutButton_Click"/>
+            
+        </StackPanel>
+    </Grid>
+</Page>

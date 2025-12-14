@@ -1,0 +1,115 @@
+<Page x:Class="UI.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="HomePage">
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <ScrollViewer>
+            <StackPanel Margin="20">
+                <!-- Приветственный баннер -->
+                <Border Background="{DynamicResource PrimaryColorBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                    <TextBlock Text="Добро пожаловать в вашу музыкальную библиотеку!"
+                               FontSize="24" FontWeight="Bold"
+                               Foreground="{DynamicResource TextColorBrush}"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- Недавно добавленные треки -->
+                <TextBlock Text="Недавно добавленные" FontSize="20"
+                           FontWeight="SemiBold" Margin="0,0,0,10"
+                           Foreground="{DynamicResource TextColorBrush}" />
+                
+                <ItemsControl x:Name="RecentlyAddedList" Margin="0,0,0,30">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TrackItemStyle}" 
+                                    Width="250" Height="80" MouseLeftButtonUp="TrackItem_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Grid.Column="0" 
+                                            Width="50" Height="50" 
+                                            Margin="0,0,10,0"
+                                            HorizontalAlignment="Left" 
+                                            CornerRadius="25" 
+                                            ClipToBounds="True">
+                                        <Image Source="{Binding CoverPath}" 
+                                               Stretch="UniformToFill"/>
+                                    </Border>
+                                    
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextColorBrush}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Artist.ArtistName}"
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource LightTextColor}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Популярные треки -->
+                <TextBlock Text="Популярные треки" FontSize="20"
+                           FontWeight="SemiBold" Margin="0,0,0,10"
+                           Foreground="{DynamicResource TextColorBrush}"/>
+                
+                <ItemsControl x:Name="PopularTracksList" Margin="0,0,0,30">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TrackItemStyle}" 
+                                    Width="250" Height="80" MouseLeftButtonUp="TrackItem_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Grid.Column="0" 
+                                            Width="50" Height="50" 
+                                            Margin="0,0,10,0"
+                                            HorizontalAlignment="Left" 
+                                            CornerRadius="25" 
+                                            ClipToBounds="True">
+                                        <Image Source="{Binding CoverPath}" 
+                                               Stretch="UniformToFill"/>
+                                    </Border>
+                                    
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextColorBrush}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Artist.ArtistName}"
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource LightTextColor}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
