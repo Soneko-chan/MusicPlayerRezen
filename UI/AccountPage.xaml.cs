@@ -59,6 +59,29 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// Обновляет информацию о текущем пользователе из базы данных
+        /// </summary>
+        public void UpdateUserDataFromDatabase()
+        {
+            if (App.Current.Properties.Contains("CurrentUser"))
+            {
+                var currentUser = App.Current.Properties["CurrentUser"] as Domain.User;
+                if (currentUser != null)
+                {
+                    // Получаем обновленные данные пользователя из базы данных
+                    var updatedUser = _userService.GetUserById(currentUser.UserId);
+                    if (updatedUser != null)
+                    {
+                        // Обновляем информацию о пользователе в приложении
+                        App.Current.Properties["CurrentUser"] = updatedUser;
+                        _currentUser = updatedUser;
+                        LoadUserData();
+                    }
+                }
+            }
+        }
+
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             // Удаляем текущего пользователя из свойств приложения
@@ -78,6 +101,5 @@ namespace UI
             }
         }
 
-        
     }
 }

@@ -117,7 +117,7 @@ namespace Services
                 throw new ArgumentException("Playlist or Track not found");
 
             // Check if track is already in the playlist
-            var existing = playlist.PlaylistTracks.FirstOrDefault(pt => pt.TrackId == trackId);
+            var existing = playlist.PlaylistTracks.FirstOrDefault(pt => pt.TrackId == trackId && pt.PlaylistId == playlistId);
             if (existing != null)
                 return; // Track already exists in playlist
 

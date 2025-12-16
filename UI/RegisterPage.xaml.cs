@@ -75,5 +75,6 @@ namespace UI
                 mainWindow.MainFrame.Navigate(new LoginPage(_userService));
             }
         }
+
     }
 }

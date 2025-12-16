@@ -125,5 +125,6 @@ namespace UI
                 MessageBox.Show($"Ошибка при добавлении треков: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

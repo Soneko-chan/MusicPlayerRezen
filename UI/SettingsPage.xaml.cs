@@ -101,6 +101,14 @@ namespace UI
                     // Сохраняем путь в настройках
                     UI.Properties.Settings.Default.ImportMusicPath = directoryPath;
                     UI.Properties.Settings.Default.Save();
+
+                    // Обновляем данные на главной странице и странице библиотеки
+                    // Для этого обновим навигацию на эти страницы
+                    var mainWindow = Window.GetWindow(this) as MainWindow;
+                    if (mainWindow != null && mainWindow.MainFrame.CanGoBack)
+                    {
+                        // После возврата на предыдущую страницу данные обновятся через OnNavigatedTo
+                    }
                 }
                 catch (Exception ex)
                 {

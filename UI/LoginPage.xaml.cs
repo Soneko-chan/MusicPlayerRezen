@@ -73,5 +73,6 @@ namespace UI
                 mainWindow.MainFrame.Navigate(new RegisterPage(_userService));
             }
         }
+
     }
 }

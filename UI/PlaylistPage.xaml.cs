@@ -83,15 +83,29 @@ namespace UI
 
                 if (!string.IsNullOrWhiteSpace(newName))
                 {
-                    _playlist.PlaylistName = newName;
-                    _playlist.PlaylistCoverPath = newCoverPath; // Update cover path
-                    _playlistService.UpdatePlaylist(_playlist);
+                    // Создаем новую сущность для обновления
+                    var updatedPlaylist = new Playlist
+                    {
+                        PlaylistId = _playlist.PlaylistId,
+                        PlaylistName = newName,
+                        UserId = _playlist.UserId,
+                        PlaylistCoverPath = newCoverPath,
+                        DateCreated = _playlist.DateCreated,
+                        // Копируем существующие связи
+                        PlaylistTracks = new List<PlaylistTrack>(_playlist.PlaylistTracks)
+                    };
 
-                    // Обновляем контекст данных
-                    this.DataContext = _playlist;
+                    // Сохраняем изменения в БД
+                    _playlistService.UpdatePlaylist(updatedPlaylist);
 
-                    // Перезагружаем страницу
-                    LoadPlaylistPageContent();
+                    // После сохранения в БД, перезагружаем плейлист из БД для гарантии актуальности
+                    var refreshedPlaylist = _playlistService.GetPlaylistById(_playlist.PlaylistId);
+                    if (refreshedPlaylist != null)
+                    {
+                        _playlist = refreshedPlaylist;
+                        this.DataContext = _playlist;
+                        LoadPlaylistPageContent();
+                    }
                 }
             }
         }
@@ -117,8 +131,9 @@ namespace UI
                     var mainWindow = Window.GetWindow(this) as MainWindow;
                     if (mainWindow != null)
                     {
-                        // Navigate back to playlists page
-                        mainWindow.MainFrame.Navigate(new PlaylistsPage(_playlistService, _trackService, _userService));
+                        // Navigate back to playlists page and ensure it refreshes content
+                        var playlistsPage = new PlaylistsPage(_playlistService, _trackService, _userService);
+                        mainWindow.MainFrame.Navigate(playlistsPage);
                     }
                 }
                 catch (Exception ex)

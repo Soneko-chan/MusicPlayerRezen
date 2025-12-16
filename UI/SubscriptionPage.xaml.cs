@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Domain;
 using Services;
 
 namespace UI
@@ -114,6 +115,14 @@ namespace UI
                     _paymentService.ProcessPayment(user.UserId, cardNumber, expiry, cvv, amount);
                     MessageBox.Show("Подписка успешно оплачена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                    // Получаем обновленные данные пользователя из базы данных
+                    var updatedUser = _userService.GetUserById(user.UserId);
+                    if (updatedUser != null)
+                    {
+                        // Обновляем информацию о пользователе в приложении
+                        App.Current.Properties["CurrentUser"] = updatedUser;
+                    }
+
                     // Refresh the page to show updated status
                     LoadSubscriptionPageContent();
                 }
@@ -127,5 +136,6 @@ namespace UI
                 MessageBox.Show($"Ошибка при оплате: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }
