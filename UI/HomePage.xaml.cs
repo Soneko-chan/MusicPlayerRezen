@@ -29,32 +29,31 @@ namespace UI
         {
             try
             {
-                // Загружаем недавно добавленные треки
+                
                 var recentlyAddedTracks = _trackService.GetAllTracks()
                     .OrderByDescending(t => t.DateCreated)
                     .Take(10)
                     .ToList();
 
-                // Привязываем данные к ItemsControl
+                
                 RecentlyAddedList.ItemsSource = recentlyAddedTracks;
 
-                // Загружаем популярные треки (например, треки, добавленные в плейлисты чаще всего)
                 var popularTracks = GetPopularTracks(10);
                 PopularTracksList.ItemsSource = popularTracks;
 
-                // Загружаем последние плейлисты пользователя
+               
                 
             }
             catch (Exception ex)
             {
-                // Обработка ошибок при загрузке данных
+                
                 System.Diagnostics.Debug.WriteLine($"Ошибка при загрузке контента главной страницы: {ex.Message}");
             }
         }
 
         private List<Track> GetPopularTracks(int count)
         {
-            // Простая логика: считаем треки, которые чаще всего встречаются в плейлистах
+            
             var allTracks = _trackService.GetAllTracks();
             var playlistTracks = _playlistService.GetAllPlaylists()
                 .SelectMany(p => p.PlaylistTracks)
@@ -78,23 +77,12 @@ namespace UI
                 if (mainWindow != null)
                 {
                     var allTracks = _trackService.GetAllTracks();
-                    // Удаляем потенциальные null значения из списка перед передачей
                     var nonNullTracks = allTracks.Where(t => t != null).ToList();
                     mainWindow.PlayTrackFromOtherPage(track, nonNullTracks);
                 }
             }
         }
 
-        private void PlaylistItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Border border && border.DataContext is Playlist playlist)
-            {
-                var mainWindow = Window.GetWindow(this) as MainWindow;
-                if (mainWindow != null)
-                {
-                    mainWindow.MainFrame.Navigate(new PlaylistPage(playlist, _playlistService, _trackService, _userService));
-                }
-            }
-        }
+        
     }
 }

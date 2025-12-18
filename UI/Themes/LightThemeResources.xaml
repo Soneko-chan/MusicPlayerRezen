@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Цвета для светлой темы -->
+    
     <Color x:Key="CurrentBackgroundColor">#F5F7FA</Color>
     <Color x:Key="CurrentPrimaryColor">#4361EE</Color>
     <Color x:Key="CurrentPrimaryDarkColor">#3A56D4</Color>
@@ -17,7 +17,7 @@
     <Color x:Key="CurrentDangerColor">#F15B46</Color>
     <Color x:Key="CurrentShadowColor">Black</Color>
 
-    <!-- Кисти для светлой темы -->
+    
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource CurrentBackgroundColor}"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{StaticResource CurrentPrimaryColor}"/>
     <SolidColorBrush x:Key="PrimaryBrushDark" Color="{StaticResource CurrentPrimaryDarkColor}"/>
@@ -33,7 +33,7 @@
     <SolidColorBrush x:Key="DangerColorBrush" Color="{StaticResource CurrentDangerColor}"/>
     <SolidColorBrush x:Key="ShadowColorBrush" Color="{StaticResource CurrentShadowColor}"/>
 
-    <!-- Алиасы для совместимости с существующим кодом -->
+   
     <SolidColorBrush x:Key="BackgroundColor" Color="{StaticResource CurrentBackgroundColor}"/>
     <SolidColorBrush x:Key="PrimaryColor" Color="{StaticResource CurrentPrimaryColor}"/>
     <SolidColorBrush x:Key="PrimaryDark" Color="{StaticResource CurrentPrimaryDarkColor}"/>
@@ -48,7 +48,7 @@
     <SolidColorBrush x:Key="WarningColor" Color="{StaticResource CurrentWarningColor}"/>
     <SolidColorBrush x:Key="DangerColor" Color="{StaticResource CurrentDangerColor}"/>
 
-    <!-- Стиль для кнопки -->
+   
     <Style x:Key="StandardButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"/>
@@ -88,7 +88,7 @@
         </Setter>
     </Style>
 
-    <!-- Стиль для альтернативной кнопки -->
+    
     <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource StandardButtonStyle}">
         <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"/>
@@ -99,7 +99,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Стиль для TextBox -->
+   
     <Style x:Key="StandardTextBoxStyle" TargetType="TextBox">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundColorBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"/>
@@ -148,7 +148,7 @@
         </Setter>
     </Style>
 
-    <!-- Стиль для PasswordBox -->
+    
     <Style x:Key="StandardPasswordBoxStyle" TargetType="PasswordBox">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundColorBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"/>
@@ -187,7 +187,7 @@
         </Setter>
     </Style>
 
-    <!-- Стиль для ListBox -->
+    
     <Style x:Key="StandardListBoxStyle" TargetType="ListBox">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundColorBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ControlBorderColorBrush}"/>
@@ -222,7 +222,7 @@
         </Setter>
     </Style>
 
-    <!-- Стиль для ListBoxItem -->
+    
     <Style x:Key="StandardListBoxItemStyle" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
@@ -264,7 +264,7 @@
         </Setter>
     </Style>
 
-    <!-- Стиль для элемента списка с обложкой -->
+    
     <Style x:Key="TrackItemStyle" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundColorBrush}"/>
         <Setter Property="CornerRadius" Value="12"/>
@@ -290,7 +290,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Стиль для карточки плейлиста -->
+    
     <Style x:Key="PlaylistCardStyle" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource ControlBackgroundColorBrush}"/>
         <Setter Property="CornerRadius" Value="12"/>
@@ -315,7 +315,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Стиль для опасной кнопки -->
+   
     <Style x:Key="DangerButtonStyle" TargetType="Button" BasedOn="{StaticResource StandardButtonStyle}">
         <Setter Property="Background" Value="{StaticResource DangerColorBrush}"/>
         <Style.Triggers>

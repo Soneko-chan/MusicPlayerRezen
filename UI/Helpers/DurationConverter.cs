@@ -12,7 +12,7 @@ namespace UI.Helpers
             {
                 var timeSpan = TimeSpan.FromSeconds(durationInSeconds);
                 
-                // Format as mm:ss if less than 1 hour, otherwise as h:mm:ss
+                
                 if (timeSpan.TotalHours < 1)
                 {
                     return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
@@ -27,7 +27,7 @@ namespace UI.Helpers
             {
                 var timeSpan = TimeSpan.FromSeconds(durationInDouble);
                 
-                // Format as mm:ss if less than 1 hour, otherwise as h:mm:ss
+                
                 if (timeSpan.TotalHours < 1)
                 {
                     return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";

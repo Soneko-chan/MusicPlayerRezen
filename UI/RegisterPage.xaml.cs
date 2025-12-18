@@ -25,7 +25,7 @@ namespace UI
             string password = UI.Helpers.PasswordBoxHelper.GetPassword(PasswordBox);
             string confirmPassword = UI.Helpers.PasswordBoxHelper.GetPassword(ConfirmPasswordBox);
 
-            // Validate input
+            
             if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(username) ||
                 string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
             {
@@ -50,7 +50,7 @@ namespace UI
                 _userService?.RegisterUser(login, username, email, password);
                 MessageBox.Show("Регистрация прошла успешно! Теперь вы можете войти в систему.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Navigate back to login page
+                
                 var mainWindow = Window.GetWindow(this) as MainWindow;
                 if (mainWindow != null && _userService != null)
                 {

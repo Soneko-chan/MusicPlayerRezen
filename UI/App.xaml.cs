@@ -78,58 +78,57 @@ namespace UI
             var app = Application.Current;
             if (app != null)
             {
-                // Получаем сохраненную тему из настроек
+                
                 string savedTheme = UI.Properties.Settings.Default.SelectedTheme;
                 if (!string.IsNullOrEmpty(savedTheme))
                 {
-                    // Применяем тему через ThemeManager для динамического обновления
+                    
                     bool isDarkTheme = savedTheme.Contains("DarkTheme.xaml");
                     UI.Themes.ThemeManager.ApplyTheme(isDarkTheme);
                 }
                 else
                 {
-                    // Если тема не сохранена, устанавливаем светлую тему по умолчанию
-                    // Но у нас уже загружена светлая тема по умолчанию в App.xaml
-                    UI.Themes.ThemeManager.ApplyTheme(false); // светлая тема - для установки состояния
+                    
+                    UI.Themes.ThemeManager.ApplyTheme(false);
                 }
             }
         }
 
         private void SeedInitData()
         {
-            // Check if users already exist
+            
             if (_userRepository != null && _userRepository.GetAll().Any())
             {
                 return;
             }
 
-            // Create initial users
+            
             var userService = new UserService(_userRepository!);
 
             try
             {
-                // Create users with different subscription statuses
+                
                 userService.RegisterUser("admin", "Admin User", "admin@example.com", "admin123");
                 userService.RegisterUser("user1", "Regular User 1", "user1@example.com", "password1");
                 userService.RegisterUser("user2", "Regular User 2", "user2@example.com", "password2");
 
-                // Update subscription for one user to be active
+                
                 var user = _userRepository?.GetByLogin("user1");
                 if (user != null)
                 {
-                    user.SubscriptionExpiry = DateTime.Now.AddDays(30); // 30 days subscription
+                    user.SubscriptionExpiry = DateTime.Now.AddDays(30); 
                     _userRepository?.Update(user);
                 }
 
-                // Update subscription for another user to be expired
+                
                 user = _userRepository?.GetByLogin("user2");
                 if (user != null)
                 {
-                    user.SubscriptionExpiry = DateTime.Now.AddDays(-10); // Expired subscription
+                    user.SubscriptionExpiry = DateTime.Now.AddDays(-10); 
                     _userRepository?.Update(user);
                 }
 
-                // Сохраняем все изменения в базу данных
+                
                 _dbContext?.SaveChanges();
             }
             catch (Exception ex)
@@ -140,12 +139,12 @@ namespace UI
 
         protected override void OnExit(ExitEventArgs e)
         {
-            // Сохраняем настройки перед выходом
+            
             UI.Properties.Settings.Default.Save();
 
             try
             {
-                // Сохраняем все незавершенные изменения в базу данных
+                
                 _dbContext?.SaveChanges();
             }
             catch (Exception ex)

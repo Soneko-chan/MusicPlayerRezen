@@ -23,7 +23,7 @@ namespace Data.SqlServer
 
         public Track? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Tracks
@@ -35,7 +35,7 @@ namespace Data.SqlServer
 
         public List<Track> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Tracks
@@ -50,7 +50,7 @@ namespace Data.SqlServer
             var existingTrack = _context.Tracks.FirstOrDefault(t => t.TrackId == entity.TrackId);
             if (existingTrack != null)
             {
-                // Обновляем поля сущности
+                
                 existingTrack.ArtistId = entity.ArtistId;
                 existingTrack.AlbumId = entity.AlbumId;
                 existingTrack.DateCreated = entity.DateCreated;
@@ -91,7 +91,7 @@ namespace Data.SqlServer
 
         public Artist? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Artists
@@ -103,7 +103,7 @@ namespace Data.SqlServer
 
         public List<Artist> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Artists
@@ -118,7 +118,7 @@ namespace Data.SqlServer
             var existingArtist = _context.Artists.FirstOrDefault(a => a.ArtistId == entity.ArtistId);
             if (existingArtist != null)
             {
-                // Обновляем поля сущности
+                
                 existingArtist.ArtistName = entity.ArtistName;
 
                 _context.SaveChanges();
@@ -153,7 +153,7 @@ namespace Data.SqlServer
 
         public Album? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Albums
@@ -165,7 +165,7 @@ namespace Data.SqlServer
 
         public List<Album> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Albums
@@ -180,7 +180,7 @@ namespace Data.SqlServer
             var existingAlbum = _context.Albums.FirstOrDefault(a => a.AlbumId == entity.AlbumId);
             if (existingAlbum != null)
             {
-                // Обновляем поля сущности
+                
                 existingAlbum.ArtistId = entity.ArtistId;
                 existingAlbum.AlbumName = entity.AlbumName;
                 existingAlbum.ReleaseYear = entity.ReleaseYear;
@@ -217,7 +217,7 @@ namespace Data.SqlServer
 
         public Playlist? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+           
             _context.ChangeTracker.Clear();
 
             return _context.Playlists
@@ -234,7 +234,7 @@ namespace Data.SqlServer
 
         public List<Playlist> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Playlists
@@ -251,13 +251,13 @@ namespace Data.SqlServer
 
         public void Update(Playlist entity)
         {
-            // Сначала получаем существующую сущность из БД
+            
             var existingPlaylist = _context.Playlists
                 .FirstOrDefault(p => p.PlaylistId == entity.PlaylistId);
 
             if (existingPlaylist != null)
             {
-                // Обновляем только основные поля
+                
                 existingPlaylist.PlaylistName = entity.PlaylistName;
                 existingPlaylist.UserId = entity.UserId;
                 existingPlaylist.PlaylistCoverPath = entity.PlaylistCoverPath;
@@ -266,18 +266,17 @@ namespace Data.SqlServer
                 _context.SaveChanges();
             }
 
-            // Обновляем связи отдельно, чтобы избежать конфликта отслеживания
-            // Удаляем старые связи
+            
             var existingTracks = _context.PlaylistTracks.Where(pt => pt.PlaylistId == entity.PlaylistId).ToList();
             _context.PlaylistTracks.RemoveRange(existingTracks);
 
-            // Добавляем новые связи
+            
             foreach (var track in entity.PlaylistTracks)
             {
-                // Проверяем, что трек существует и не отслеживается где-то еще
+                
                 var playlistTrack = new PlaylistTrack
                 {
-                    PlaylistId = entity.PlaylistId, // Используем ID плейлиста, а не из track
+                    PlaylistId = entity.PlaylistId, 
                     TrackId = track.TrackId,
                     TrackOrder = track.TrackOrder,
                     DateAdded = track.DateAdded
@@ -291,17 +290,17 @@ namespace Data.SqlServer
 
         public void Delete(int id)
         {
-            // Создаем отдельный запрос без загрузки всех связанных данных, чтобы избежать проблем отслеживания
+            
             var playlist = _context.Playlists
-                .Include(p => p.PlaylistTracks)  // Загружаем только связи, которые нужно удалить
+                .Include(p => p.PlaylistTracks)  
                 .FirstOrDefault(p => p.PlaylistId == id);
 
             if (playlist != null)
             {
-                // Удаляем связи с треками
+                
                 _context.PlaylistTracks.RemoveRange(playlist.PlaylistTracks);
 
-                // Удаляем сам плейлист
+                
                 _context.Playlists.Remove(playlist);
 
                 _context.SaveChanges();
@@ -327,7 +326,7 @@ namespace Data.SqlServer
 
         public User? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Users
@@ -340,7 +339,7 @@ namespace Data.SqlServer
 
         public List<User> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
+            
             _context.ChangeTracker.Clear();
 
             return _context.Users
@@ -356,7 +355,7 @@ namespace Data.SqlServer
             var existingUser = _context.Users.FirstOrDefault(u => u.UserId == entity.UserId);
             if (existingUser != null)
             {
-                // Обновляем поля сущности
+                
                 existingUser.Login = entity.Login;
                 existingUser.PasswordHash = entity.PasswordHash;
                 existingUser.Username = entity.Username;
@@ -370,7 +369,7 @@ namespace Data.SqlServer
 
         public void Delete(int id)
         {
-            // Для удаления получаем сущность напрямую из базы данных без использования кэшированных данных
+            
             var entity = _context.Users
                 .Include(u => u.Playlists)
                 .ThenInclude(p => p.PlaylistTracks)
@@ -387,7 +386,6 @@ namespace Data.SqlServer
 
         public User? GetByLogin(string login)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
             _context.ChangeTracker.Clear();
 
             return _context.Users
@@ -416,7 +414,6 @@ namespace Data.SqlServer
 
         public Payment? GetById(int id)
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
             _context.ChangeTracker.Clear();
 
             return _context.Payments
@@ -427,7 +424,6 @@ namespace Data.SqlServer
 
         public List<Payment> GetAll()
         {
-            // Принудительно очищаем отслеживание и получаем свежие данные из базы
             _context.ChangeTracker.Clear();
 
             return _context.Payments
@@ -441,7 +437,7 @@ namespace Data.SqlServer
             var existingPayment = _context.Payments.FirstOrDefault(p => p.PaymentId == entity.PaymentId);
             if (existingPayment != null)
             {
-                // Обновляем поля сущности
+               
                 existingPayment.UserId = entity.UserId;
                 existingPayment.CardLastFour = entity.CardLastFour;
                 existingPayment.PaymentAmount = entity.PaymentAmount;

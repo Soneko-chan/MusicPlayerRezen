@@ -7,7 +7,7 @@ namespace Domain
         public string AlbumName { get; set; } = string.Empty;
         public int? ReleaseYear { get; set; }
 
-        // Navigation properties
+        
         public virtual Artist? Artist { get; set; }
         public virtual ICollection<Track> Tracks { get; set; } = new List<Track>();
     }

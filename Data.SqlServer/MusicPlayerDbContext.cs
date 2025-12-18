@@ -5,8 +5,7 @@ namespace Data.SqlServer
 {
     public class MusicPlayerDbContext : DbContext
     {
-        public MusicPlayerDbContext(DbContextOptions<MusicPlayerDbContext> options)
-            : base(options)
+        public MusicPlayerDbContext(DbContextOptions<MusicPlayerDbContext> options) : base(options)
         {
         }
 
@@ -20,18 +19,16 @@ namespace Data.SqlServer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Configuration should be provided via dependency injection in the application
-            // This method should not configure the connection string directly
-            // Only use this for design-time configuration if absolutely necessary
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure composite primary key for PlaylistTrack
+            
             modelBuilder.Entity<PlaylistTrack>()
                 .HasKey(pt => new { pt.PlaylistId, pt.TrackId });
 
-            // Configure relationships
+            
             modelBuilder.Entity<PlaylistTrack>()
                 .HasOne(pt => pt.Playlist)
                 .WithMany(p => p.PlaylistTracks)
@@ -42,7 +39,7 @@ namespace Data.SqlServer
                 .WithMany(t => t.PlaylistTracks)
                 .HasForeignKey(pt => pt.TrackId);
 
-            // Seed data will be configured here if needed
+            
             base.OnModelCreating(modelBuilder);
         }
     }

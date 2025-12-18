@@ -7,7 +7,7 @@ namespace Domain
         public int TrackOrder { get; set; }
         public DateTime DateAdded { get; set; }
 
-        // Navigation properties
+        
         public virtual Playlist? Playlist { get; set; }
         public virtual Track? Track { get; set; }
     }

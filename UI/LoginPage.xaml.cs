@@ -35,16 +35,16 @@ namespace UI
                     var user = _userService?.GetUserByLogin(login);
                     if (user != null)
                     {
-                        // Store the current user in application properties
+                        
                         App.Current.Properties["CurrentUser"] = user;
 
                         MessageBox.Show($"Добро пожаловать, {user.Username}!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Navigate back to main window or refresh UI
+                        
                         var mainWindow = Window.GetWindow(this) as MainWindow;
                         if (mainWindow != null)
                         {
-                            // Обновляем текст кнопки "Вход" на "Аккаунт" после успешного входа
+                            
                             mainWindow.UpdateLoginButtonAfterLogin();
 
                             mainWindow.MainFrame.Navigate(new HomePage(

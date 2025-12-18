@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок с информацией о плейлисте -->
+        
         <Border Grid.Row="0" Background="{DynamicResource SecondaryColorBrush}"
                 Margin="20,15" CornerRadius="8" Padding="20">
             <StackPanel>
@@ -30,7 +30,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Панель поиска -->
+        
         <Border Grid.Row="1" Background="{DynamicResource ControlBackgroundColor}"
                 Margin="20,10" Padding="15" CornerRadius="8">
             <Grid>
@@ -60,7 +60,7 @@
             </Grid>
         </Border>
 
-        <!-- Список треков -->
+        
         <ScrollViewer Grid.Row="2" >
             <ListBox Name="TracksList" SelectionMode="Multiple" Background="{DynamicResource BackgroundColor}" BorderThickness="0">
                 <ListBox.ItemsPanel>

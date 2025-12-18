@@ -26,10 +26,10 @@ namespace UI
 
         private void LoadPlaylistsPageContent()
         {
-            // Загружаем плейлисты пользователя
+            
             var playlists = _playlistService.GetAllPlaylists();
             
-            // Фильтруем плейлисты текущего пользователя, если он авторизован
+            
             if (App.Current.Properties.Contains("CurrentUser"))
             {
                 var currentUser = App.Current.Properties["CurrentUser"] as User;
@@ -39,20 +39,20 @@ namespace UI
                 }
             }
             
-            // Привязываем данные к ItemsControl
+            
             PlaylistsList.ItemsSource = playlists;
         }
 
         private void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create a new playlist with a default name
+            
             var newPlaylist = new Playlist
             {
                 PlaylistName = "Новый плейлист",
                 DateCreated = DateTime.Now
             };
 
-            // Присваиваем плейлист текущему пользователю, если он авторизован
+            
             if (App.Current.Properties.Contains("CurrentUser"))
             {
                 var currentUser = App.Current.Properties["CurrentUser"] as User;
@@ -63,14 +63,14 @@ namespace UI
             }
 
             _playlistService.AddPlaylist(newPlaylist);
-            LoadPlaylistsPageContent(); // Refresh the page
+            LoadPlaylistsPageContent();
         }
 
         private void PlaylistItem_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Border border && border.DataContext is Playlist playlist)
             {
-                // Navigate to the specific playlist page
+                
                 var mainWindow = Window.GetWindow(this) as MainWindow;
                 if (mainWindow != null)
                 {

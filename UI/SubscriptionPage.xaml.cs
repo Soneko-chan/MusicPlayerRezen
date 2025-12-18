@@ -29,13 +29,13 @@ namespace UI
 
         private void LoadSubscriptionPageContent()
         {
-            // Обновляем информацию о текущем пользователе
+            
             if (App.Current.Properties.Contains("CurrentUser"))
             {
                 var user = App.Current.Properties["CurrentUser"] as Domain.User;
                 if (user != null)
                 {
-                    // Обновляем статус подписки
+                    
                     if (user.SubscriptionExpiry.HasValue)
                     {
                         if (user.SubscriptionExpiry > DateTime.Now)
@@ -68,7 +68,7 @@ namespace UI
                 DaysLeftText.Text = "Войдите в аккаунт для просмотра статуса подписки";
             }
 
-            // Инициализируем поля формы оплаты
+            
             _cardNumberTextBox = CardNumberTextBox;
             _expiryTextBox = ExpiryTextBox;
             _cvvTextBox = CvvTextBox;
@@ -77,15 +77,13 @@ namespace UI
         }
 
 
-       
-
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
             var cardNumber = _cardNumberTextBox?.Text;
             var expiry = _expiryTextBox?.Text;
             var cvv = _cvvTextBox?.Text;
 
-            // Validate input
+            
             if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length != 16 || !long.TryParse(cardNumber, out _))
             {
                 MessageBox.Show("Пожалуйста, введите корректный номер карты (16 цифр)", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -104,7 +102,7 @@ namespace UI
                 return;
             }
 
-            // Calculate amount based on selected option
+            
             decimal amount = _isMonthlySelected ? 149.00m : 1490.00m;
 
             try
@@ -115,15 +113,15 @@ namespace UI
                     _paymentService.ProcessPayment(user.UserId, cardNumber, expiry, cvv, amount);
                     MessageBox.Show("Подписка успешно оплачена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Получаем обновленные данные пользователя из базы данных
+                    
                     var updatedUser = _userService.GetUserById(user.UserId);
                     if (updatedUser != null)
                     {
-                        // Обновляем информацию о пользователе в приложении
+                        
                         App.Current.Properties["CurrentUser"] = updatedUser;
                     }
 
-                    // Refresh the page to show updated status
+                    
                     LoadSubscriptionPageContent();
                 }
                 else

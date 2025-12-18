@@ -8,7 +8,7 @@ namespace Domain
         public string? PlaylistCoverPath { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        // Navigation properties
+        
         public virtual User? User { get; set; }
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();
     }

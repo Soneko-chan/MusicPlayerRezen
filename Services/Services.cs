@@ -21,7 +21,7 @@ namespace Services
 
         public void AddTrack(Track track)
         {
-            // Ensure artist exists
+            
             if (track.ArtistId.HasValue)
             {
                 var artist = _artistRepository.GetById(track.ArtistId.Value);
@@ -29,7 +29,7 @@ namespace Services
                     throw new ArgumentException($"Artist with ID {track.ArtistId} does not exist");
             }
 
-            // Ensure album exists
+            
             if (track.AlbumId.HasValue)
             {
                 var album = _albumRepository.GetById(track.AlbumId.Value);
@@ -77,7 +77,7 @@ namespace Services
 
         public void AddPlaylist(Playlist playlist)
         {
-            // Ensure user exists
+            
             if (playlist.UserId.HasValue)
             {
                 var user = _userRepository.GetById(playlist.UserId.Value);
@@ -116,10 +116,10 @@ namespace Services
             if (playlist == null || track == null)
                 throw new ArgumentException("Playlist or Track not found");
 
-            // Check if track is already in the playlist
+            
             var existing = playlist.PlaylistTracks.FirstOrDefault(pt => pt.TrackId == trackId && pt.PlaylistId == playlistId);
             if (existing != null)
-                return; // Track already exists in playlist
+                return; 
 
             var playlistTrack = new PlaylistTrack
             {
@@ -133,21 +133,7 @@ namespace Services
             _playlistRepository.Update(playlist);
         }
 
-        public void RemoveTrackFromPlaylist(int playlistId, int trackId)
-        {
-            var playlist = _playlistRepository.GetById(playlistId);
-
-            if (playlist == null)
-                throw new ArgumentException("Playlist not found");
-
-            var playlistTrack = playlist.PlaylistTracks.FirstOrDefault(pt => pt.TrackId == trackId && pt.PlaylistId == playlistId);
-
-            if (playlistTrack != null)
-            {
-                playlist.PlaylistTracks.Remove(playlistTrack);
-                _playlistRepository.Update(playlist);
-            }
-        }
+        
 
     }
 
@@ -162,7 +148,7 @@ namespace Services
 
         public void AddUser(User user)
         {
-            // Check if login is already taken
+            
             var existingUser = _userRepository.GetByLogin(user.Login);
             if (existingUser != null)
                 throw new ArgumentException("User with this login already exists");
@@ -201,19 +187,19 @@ namespace Services
             if (user == null)
                 return false;
 
-            // Compare password hash with stored hash
+            
             return VerifyPassword(password, user.PasswordHash);
         }
 
         private bool VerifyPassword(string enteredPassword, string storedHash)
         {
-            // Simplified password verification - in real app, use proper hashing like bcrypt or PBKDF2
+            
             return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHash);
         }
 
         public void RegisterUser(string login, string username, string? email, string password)
         {
-            // Check if login is already taken
+            
             var existingUser = _userRepository.GetByLogin(login);
             if (existingUser != null)
                 throw new ArgumentException("User with this login already exists");
@@ -223,10 +209,10 @@ namespace Services
                 Login = login,
                 Username = username,
                 Email = email,
-                SubscriptionExpiry = null // No subscription by default
+                SubscriptionExpiry = null 
             };
 
-            // Hash the password before storing
+            
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
 
             _userRepository.Add(user);
@@ -247,12 +233,12 @@ namespace Services
 
         public void ProcessPayment(int userId, string cardNumber, string expiryDate, string cvv, decimal amount)
         {
-            // Validate user exists
+            
             var user = _userRepository.GetById(userId);
             if (user == null)
                 throw new ArgumentException("User not found");
 
-            // Validate card details (simplified validation)
+            
             if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length != 16 || !long.TryParse(cardNumber, out _))
                 throw new ArgumentException("Invalid card number");
 
@@ -262,7 +248,7 @@ namespace Services
             if (string.IsNullOrWhiteSpace(cvv) || (cvv.Length != 3 && cvv.Length != 4))
                 throw new ArgumentException("Invalid CVV");
 
-            // Create payment record
+            
             var payment = new Payment
             {
                 UserId = userId,
@@ -274,7 +260,7 @@ namespace Services
 
             _paymentRepository.Add(payment);
 
-            // Update user subscription expiry (typically 1 month from payment)
+           
             user.SubscriptionExpiry = DateTime.Now.AddMonths(1);
             _userRepository.Update(user);
         }

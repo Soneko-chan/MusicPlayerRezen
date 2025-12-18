@@ -10,7 +10,7 @@ namespace Domain
         public DateTime? SubscriptionExpiry { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        // Navigation properties
+        
         public virtual ICollection<Playlist> Playlists { get; set; } = new List<Playlist>();
         public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }

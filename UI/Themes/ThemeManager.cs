@@ -15,10 +15,10 @@ namespace UI.Themes
             var application = Application.Current;
             if (application == null) return;
 
-            // Находим ResourceDictionary с текущей темой и заменяем его
+            
             var resourceDictionaries = application.Resources.MergedDictionaries;
 
-            // Удаляем предыдущий файл темы
+            
             ResourceDictionary oldTheme = null;
             for (int i = resourceDictionaries.Count - 1; i >= 0; i--)
             {
@@ -33,7 +33,7 @@ namespace UI.Themes
                 }
             }
 
-            // Загружаем новую тему
+           
             ResourceDictionary newTheme;
             if (isDarkTheme)
             {
@@ -50,15 +50,15 @@ namespace UI.Themes
                 };
             }
 
-            // Добавляем новую тему
+            
             resourceDictionaries.Add(newTheme);
 
             _isDarkTheme = isDarkTheme;
 
-            // Принудительно обновляем все окна приложения
+            
             foreach (Window window in application.Windows)
             {
-                // Обновление ресурсов окна для применения новых цветов
+                
                 window.InvalidateMeasure();
                 window.InvalidateArrange();
                 window.UpdateLayout();
@@ -70,16 +70,16 @@ namespace UI.Themes
             var application = Application.Current;
             if (application == null) return false;
 
-            // Проверяем, является ли фон темным
+           
             if (application.Resources.Contains("CurrentBackgroundColor"))
             {
                 var color = (Color)application.Resources["CurrentBackgroundColor"];
-                // Простой способ определения: если яркость цвета меньше 0.5, то это темная тема
+                
                 double brightness = (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255;
                 return brightness < 0.5;
             }
 
-            // По умолчанию предполагаем светлую тему
+            
             return false;
         }
     }

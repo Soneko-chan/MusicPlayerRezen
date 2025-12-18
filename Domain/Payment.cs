@@ -9,7 +9,7 @@ namespace Domain
         public DateTime PaymentDate { get; set; }
         public string Status { get; set; } = string.Empty;
 
-        // Navigation properties
+        
         public virtual User? User { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace UI
         {
             InitializeComponent();
 
-            // Получаем сервисы из свойств приложения
+            
             if (Application.Current.Properties.Contains("TrackService"))
             {
                 _trackService = Application.Current.Properties["TrackService"] as TrackService;
@@ -28,26 +28,26 @@ namespace UI
 
         private void LoadSettingsPageContent()
         {
-            // Отключаем обработчики событий, чтобы избежать ложного срабатывания при установке значений
+            
             if (DarkThemeRadio != null) DarkThemeRadio.Checked -= ThemeRadio_Checked;
             if (LightThemeRadio != null) LightThemeRadio.Checked -= ThemeRadio_Checked;
             if (DarkThemeRadio != null) DarkThemeRadio.Unchecked -= ThemeRadio_Checked;
             if (LightThemeRadio != null) LightThemeRadio.Unchecked -= ThemeRadio_Checked;
 
-            // Проверяем сохраненную тему в настройках и устанавливаем соответствующий переключатель
+            
             string savedTheme = UI.Properties.Settings.Default.SelectedTheme;
             bool isDarkTheme = !string.IsNullOrEmpty(savedTheme) && savedTheme.Contains("DarkTheme.xaml");
 
             if (DarkThemeRadio != null) DarkThemeRadio.IsChecked = isDarkTheme;
             if (LightThemeRadio != null) LightThemeRadio.IsChecked = !isDarkTheme;
 
-            // Включаем обработчики событий обратно
+           
             if (DarkThemeRadio != null) DarkThemeRadio.Checked += ThemeRadio_Checked;
             if (LightThemeRadio != null) LightThemeRadio.Checked += ThemeRadio_Checked;
             if (DarkThemeRadio != null) DarkThemeRadio.Unchecked += ThemeRadio_Checked;
             if (LightThemeRadio != null) LightThemeRadio.Unchecked += ThemeRadio_Checked;
 
-            // Показываем текущую директорию импорта
+            
             CurrentImportPathText.Text = UI.Properties.Settings.Default.ImportMusicPath != null
                 ? $"Текущая директория импорта: {UI.Properties.Settings.Default.ImportMusicPath}"
                 : "Текущая директория импорта: не выбрана";
@@ -57,17 +57,17 @@ namespace UI
         {
             var isDarkTheme = DarkThemeRadio != null && DarkThemeRadio.IsChecked == true;
 
-            // Применяем новую тему
+           
             UI.Themes.ThemeManager.ApplyTheme(isDarkTheme);
 
-            // Сохраняем выбор темы
+            
             UI.Properties.Settings.Default.SelectedTheme = isDarkTheme ? "Themes/DarkTheme.xaml" : "Themes/LightTheme.xaml";
             UI.Properties.Settings.Default.Save();
         }
 
         private void ImportMusicButton_Click(object sender, RoutedEventArgs e)
         {
-            // Используем Ookii.Dialogs для выбора папки
+            
             var dialog = new VistaFolderBrowserDialog()
             {
                 Description = "Выберите папку с музыкальными файлами",
@@ -95,19 +95,18 @@ namespace UI
                     ImportTracksFromDirectory(directoryPath);
                     MessageBox.Show($"Импорт треков завершен. Найдено и добавлено {GetFileCount(directoryPath)} аудиофайлов.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Обновляем отображение текущей директории
+                   
                     CurrentImportPathText.Text = $"Текущая директория импорта: {directoryPath}";
 
-                    // Сохраняем путь в настройках
+                    
                     UI.Properties.Settings.Default.ImportMusicPath = directoryPath;
                     UI.Properties.Settings.Default.Save();
 
-                    // Обновляем данные на главной странице и странице библиотеки
-                    // Для этого обновим навигацию на эти страницы
+                    
                     var mainWindow = Window.GetWindow(this) as MainWindow;
                     if (mainWindow != null && mainWindow.MainFrame.CanGoBack)
                     {
-                        // После возврата на предыдущую страницу данные обновятся через OnNavigatedTo
+                        
                     }
                 }
                 catch (Exception ex)
@@ -138,7 +137,7 @@ namespace UI
                     var track = CreateTrackFromAudioFile(filePath);
                     if (track != null)
                     {
-                        // Проверяем, не существует ли уже трек с таким же путем
+                        
                         var existingTrack = _trackService?.GetAllTracks()
                             .FirstOrDefault(t => t.TrackFilePath.Equals(filePath, StringComparison.OrdinalIgnoreCase));
 
@@ -150,7 +149,7 @@ namespace UI
                 }
                 catch (Exception ex)
                 {
-                    // Логируем ошибку для конкретного файла, но продолжаем обработку других файлов
+                    
                     System.Diagnostics.Debug.WriteLine($"Ошибка при обработке файла {filePath}: {ex.Message}");
                 }
             }
@@ -170,7 +169,7 @@ namespace UI
                     DateCreated = File.GetCreationTime(filePath)
                 };
 
-                // Пытаемся найти или установить обложку
+                
                 if (file.Tag.Pictures.Length > 0)
                 {
                     var picture = file.Tag.Pictures[0];
@@ -189,7 +188,7 @@ namespace UI
             }
             catch
             {
-                // Если не удалось обработать файл через TagLib, создаем базовую запись
+                
                 return new Track
                 {
                     Title = Path.GetFileNameWithoutExtension(filePath),

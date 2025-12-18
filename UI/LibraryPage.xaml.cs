@@ -29,14 +29,14 @@ namespace UI
 
         private void LoadLibraryPageContent()
         {
-            // Загружаем все треки
+            
             var tracks = _trackService.GetAllTracks();
             UpdateTracksDisplay(tracks);
         }
 
         private void UpdateTracksDisplay(List<Track> tracks)
         {
-            // Отображаем треки в ListView
+           
             ContentList.ItemsSource = tracks;
         }
 

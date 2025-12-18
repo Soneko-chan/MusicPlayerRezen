@@ -23,7 +23,7 @@ namespace UI
             _trackService = trackService;
             _userService = userService;
 
-            // Устанавливаем контекст данных для привязки
+            
             this.DataContext = _playlist;
 
             LoadPlaylistPageContent();
@@ -31,7 +31,7 @@ namespace UI
 
         private void LoadPlaylistPageContent()
         {
-            // Привязываем треки плейлиста к ItemsControl
+            
             var orderedTracks = _playlist.PlaylistTracks
                 .OrderBy(pt => pt.TrackOrder)
                 .Select(pt => pt.Track)
@@ -46,7 +46,7 @@ namespace UI
         {
             if (sender is Border border && border.DataContext is Track track)
             {
-                // Create a list of tracks in this playlist for the player to navigate
+                
                 var playlistTracks = _playlist.PlaylistTracks
                     .OrderBy(pt => pt.TrackOrder)
                     .Select(pt => pt.Track)
@@ -64,7 +64,7 @@ namespace UI
 
         private void AddTrackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to a page where user can select tracks to add
+            
             var mainWindow = Window.GetWindow(this) as MainWindow;
             if (mainWindow != null)
             {
@@ -74,7 +74,7 @@ namespace UI
 
         private void EditPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            // Создаем диалог для редактирования плейлиста с возможностью выбора обложки
+            
             var dialog = new EditPlaylistDialog(_playlist.PlaylistName, _playlist.PlaylistCoverPath);
             if (dialog.ShowDialog() == true)
             {
@@ -83,7 +83,7 @@ namespace UI
 
                 if (!string.IsNullOrWhiteSpace(newName))
                 {
-                    // Создаем новую сущность для обновления
+                    
                     var updatedPlaylist = new Playlist
                     {
                         PlaylistId = _playlist.PlaylistId,
@@ -91,14 +91,14 @@ namespace UI
                         UserId = _playlist.UserId,
                         PlaylistCoverPath = newCoverPath,
                         DateCreated = _playlist.DateCreated,
-                        // Копируем существующие связи
+                        
                         PlaylistTracks = new List<PlaylistTrack>(_playlist.PlaylistTracks)
                     };
 
-                    // Сохраняем изменения в БД
+                    
                     _playlistService.UpdatePlaylist(updatedPlaylist);
 
-                    // После сохранения в БД, перезагружаем плейлист из БД для гарантии актуальности
+                    
                     var refreshedPlaylist = _playlistService.GetPlaylistById(_playlist.PlaylistId);
                     if (refreshedPlaylist != null)
                     {
@@ -112,7 +112,7 @@ namespace UI
 
         private void DeletePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            // Show confirmation dialog
+            
             var result = MessageBox.Show(
                 $"Вы уверены, что хотите удалить плейлист \"{_playlist.PlaylistName}\"?\n\nЭто действие нельзя отменить.",
                 "Подтверждение удаления",
@@ -124,14 +124,14 @@ namespace UI
             {
                 try
                 {
-                    // Delete the playlist using the service
+                    
                     _playlistService.DeletePlaylist(_playlist.PlaylistId);
 
-                    // Navigate back to the playlists page
+                    
                     var mainWindow = Window.GetWindow(this) as MainWindow;
                     if (mainWindow != null)
                     {
-                        // Navigate back to playlists page and ensure it refreshes content
+                        
                         var playlistsPage = new PlaylistsPage(_playlistService, _trackService, _userService);
                         mainWindow.MainFrame.Navigate(playlistsPage);
                     }
@@ -144,10 +144,10 @@ namespace UI
             }
         }
 
-        // Method to refresh the playlist content
+       
         public void RefreshPlaylist()
         {
-            // Получаем обновленный плейлист из сервиса
+            
             var updatedPlaylist = _playlistService.GetPlaylistById(_playlist.PlaylistId);
             if (updatedPlaylist != null)
             {

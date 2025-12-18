@@ -22,7 +22,7 @@ namespace UI
         private bool _isPlaying = false;
 
         private MediaPlayer? _mediaPlayer;
-        private double _currentVolume = 0.1; // По умолчанию 80% громкости
+        private double _currentVolume = 0.1;
         private bool _isUserChangingProgress = false;
 
         public MainWindow(TrackService trackService, PlaylistService playlistService, UserService userService, PaymentService paymentService)
@@ -34,15 +34,15 @@ namespace UI
             _userService = userService;
             _paymentService = paymentService;
 
-            // Подключаем обработчик события для слайдера громкости
+            
             if (VolumeSlider != null)
             {
                 VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
-                VolumeSlider.Value = 10; // Устанавливаем начальное значение громкости
-                _currentVolume = 0.1; // Также обновляем внутреннюю переменную
+                VolumeSlider.Value = 10; 
+                _currentVolume = 0.1; 
             }
 
-            // Navigate to home page by default
+            
             MainFrame.Navigate(new HomePage(_trackService, _playlistService, _userService));
         }
 
@@ -73,15 +73,15 @@ namespace UI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверяем, вошел ли пользователь в систему
+            
             if (App.Current.Properties.Contains("CurrentUser"))
             {
-                // Если пользователь вошел, открываем страницу аккаунта
+                
                 MainFrame.Navigate(new AccountPage(_userService));
             }
             else
             {
-                // Иначе открываем страницу входа
+                
                 MainFrame.Navigate(new LoginPage(_userService));
             }
         }
@@ -102,25 +102,7 @@ namespace UI
             }
         }
 
-        // Метод для проверки состояния пользователя при запуске или навигации
-        public void CheckAndUpdateLoginButton()
-        {
-            if (App.Current.Properties.Contains("CurrentUser"))
-            {
-                if (LoginButton != null)
-                {
-                    LoginButton.Content = "Аккаунт";
-                }
-            }
-            else
-            {
-                if (LoginButton != null)
-                {
-                    LoginButton.Content = "Вход";
-                }
-            }
-        }
-
+        
         private void PreviousTrackButton_Click(object sender, RoutedEventArgs e)
         {
             if (_currentTrackList.Count > 0 && _currentTrackIndex > 0)
@@ -176,17 +158,17 @@ namespace UI
                 }
                 catch
                 {
-                    // В случае ошибки загрузки изображения - оставляем пустым
+                    
                     CurrentTrackCover.Source = null;
                 }
             }
             else
             {
-                // Заглушка для отсутствующей обложки
+                
                 CurrentTrackCover.Source = null;
             }
 
-            // Останавливаем текущий проигрыватель, если он есть
+            
             if (_mediaPlayer != null)
             {
                 _mediaPlayer.MediaEnded -= MediaPlayer_MediaEnded;
@@ -195,17 +177,17 @@ namespace UI
                 _mediaPlayer.Close();
             }
 
-            // Создаем новый MediaPlayer
+            
             _mediaPlayer = new MediaPlayer();
 
-            // Подписываемся на события
+            
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 
-            // Устанавливаем громкость для нового плеера
+            
             _mediaPlayer.Volume = _currentVolume;
 
-            // Открываем и воспроизводим файл
+            
             if (System.IO.File.Exists(track.TrackFilePath))
             {
                 try
@@ -217,19 +199,19 @@ namespace UI
                 }
                 catch
                 {
-                    // В случае ошибки воспроизведения трека
+                    
                     _isPlaying = false;
                     PlayPauseButton.Content = "▶";
                 }
             }
 
-            // Обновляем состояние кнопок
+            
             UpdatePlaybackButtons();
         }
 
         private void UpdatePlaybackButtons()
         {
-            // Обновляем доступность кнопок в зависимости от текущей позиции
+            
             if (_currentTrackList.Count == 0)
             {
                 PreviousTrackButton.IsEnabled = false;
@@ -244,7 +226,7 @@ namespace UI
 
         private void MediaPlayer_MediaOpened(object? sender, EventArgs e)
         {
-            // Обновляем продолжительность трека при его открытии
+            
             if (_mediaPlayer != null)
             {
                 var duration = _mediaPlayer.NaturalDuration;
@@ -253,7 +235,7 @@ namespace UI
                     var totalSeconds = (int)duration.TimeSpan.TotalSeconds;
                     TotalTimeText.Text = TimeSpanToString(TimeSpan.FromSeconds(totalSeconds));
 
-                    // Начинаем таймер для обновления прогресса
+                   
                     StartProgressTimer();
                 }
             }
@@ -319,17 +301,17 @@ namespace UI
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _currentVolume = e.NewValue / 100.0; // Сохраняем текущее значение громкости
+            _currentVolume = e.NewValue / 100.0; 
 
             if (_mediaPlayer != null)
             {
-                _mediaPlayer.Volume = _currentVolume; // Громкость в MediaPlayer от 0.0 до 1.0
+                _mediaPlayer.Volume = _currentVolume; 
             }
         }
 
         private void MediaPlayer_MediaEnded(object? sender, EventArgs e)
         {
-            // Автоматически воспроизводим следующий трек при окончании текущего
+            
             if (_currentTrackIndex < _currentTrackList.Count - 1)
             {
                 _currentTrackIndex++;
@@ -337,7 +319,7 @@ namespace UI
             }
         }
 
-        // Публичный метод для воспроизведения трека из других страниц
+        
         public void PlayTrackFromOtherPage(Track track, List<Track> trackList)
         {
             PlayTrack(track, trackList);

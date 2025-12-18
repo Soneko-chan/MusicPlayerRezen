@@ -16,7 +16,7 @@ namespace UI.Helpers
         {
             string? coverPath = value as string;
 
-            // If there's a valid cover path and the file exists, return it
+            
             if (!string.IsNullOrEmpty(coverPath) && File.Exists(coverPath))
             {
                 try
@@ -25,37 +25,37 @@ namespace UI.Helpers
                 }
                 catch
                 {
-                    // If the image fails to load, fall back to default
+                    
                 }
             }
 
-            // Return a default placeholder image
+            
             return CreateDefaultPlaylistImage();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Convert back is not needed for this converter
+            
             throw new NotImplementedException();
         }
 
         private BitmapImage CreateDefaultPlaylistImage()
         {
-            // Create a simple geometric placeholder for missing playlist covers
+            
             var renderTarget = new RenderTargetBitmap(120, 120, 96, 96, Pbgra32);
             var drawingVisual = new DrawingVisual();
 
             using (var drawingContext = drawingVisual.RenderOpen())
             {
-                // Draw a colored background
+                
                 var brush = new SolidColorBrush(Colors.MediumPurple);
                 drawingContext.DrawRectangle(brush, null, new Rect(0, 0, 120, 120));
 
-                // Draw some simple shapes to represent music
+                
                 var iconBrush = new SolidColorBrush(Colors.White);
                 var pen = new Pen(iconBrush, 2);
 
-                // Draw a simple musical note shape
+                
                 drawingContext.DrawEllipse(iconBrush, pen, new Point(60, 60), 20, 20);
                 
                 var geometry = new StreamGeometry();
@@ -79,7 +79,7 @@ namespace UI.Helpers
             encoder.Save(stream);
             bitmap.StreamSource = stream;
             bitmap.EndInit();
-            bitmap.Freeze(); // Important for cross-thread access
+            bitmap.Freeze(); 
             
             return bitmap;
         }

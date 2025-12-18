@@ -34,16 +34,16 @@ namespace UI
 
         private void LoadAddToPlaylistPageContent()
         {
-            // Получаем все треки
+            
             var allTracks = _trackService.GetAllTracks();
             
-            // Получаем ID треков, уже находящихся в плейлисте
+            
             var playlistTrackIds = _playlist.PlaylistTracks.Select(pt => pt.TrackId).ToHashSet();
             
-            // Фильтруем треки, которые еще не в плейлисте
+            
             var availableTracks = allTracks.Where(t => !playlistTrackIds.Contains(t.TrackId)).ToList();
 
-            // Привязываем данные к ItemsControl
+            
             TracksList.ItemsSource = availableTracks;
         }
 
@@ -65,29 +65,29 @@ namespace UI
             if (searchTerm == "Поиск треков...")
                 searchTerm = "";
 
-            // Получаем все треки
+            
             var allTracks = _trackService.GetAllTracks();
             
-            // Получаем ID треков, уже находящихся в плейлисте
+            
             var playlistTrackIds = _playlist.PlaylistTracks.Select(pt => pt.TrackId).ToHashSet();
             
-            // Фильтруем треки, которые еще не в плейлисте и соответствуют поисковому запросу
+           
             var availableTracks = allTracks
                 .Where(t => !playlistTrackIds.Contains(t.TrackId))
                 .Where(t => t.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             (t.Artist?.ArtistName ?? "").Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
-            // Обновляем список треков
+           
             TracksList.ItemsSource = availableTracks;
         }
 
-        // Метод для добавления выделенных треков в плейлист
+        
         private void AddSelectedButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Получаем выбранные треки из ListBox
+                
                 var selectedTracks = TracksList.SelectedItems.Cast<Track>().ToList();
 
                 if (selectedTracks.Count == 0)
@@ -96,24 +96,24 @@ namespace UI
                     return;
                 }
 
-                int order = _playlist.PlaylistTracks.Count; // Начальный порядковый номер
+                int order = _playlist.PlaylistTracks.Count;
 
                 foreach (var track in selectedTracks)
                 {
                     _playlistService.AddTrackToPlaylist(_playlist.PlaylistId, track.TrackId, order++);
                 }
 
-                // Обновляем объект плейлиста, чтобы отразить новые треки
+               
                 var updatedPlaylist = _playlistService.GetPlaylistById(_playlist.PlaylistId);
                 if (updatedPlaylist != null)
                 {
                     _playlist.PlaylistTracks = updatedPlaylist.PlaylistTracks;
                 }
 
-                // Обновляем родительскую страницу
+               
                 _parentPage.RefreshPlaylist();
 
-                // Возвращаемся на страницу плейлиста
+                
                 var mainWindow = Window.GetWindow(this) as MainWindow;
                 if (mainWindow != null)
                 {

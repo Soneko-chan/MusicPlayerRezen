@@ -18,7 +18,7 @@ namespace UI
             PlaylistNameTextBox.Text = currentName ?? string.Empty;
             LoadCoverImage(currentCoverPath);
 
-            // Store initial values
+            
             CoverImagePath = currentCoverPath;
         }
 
@@ -35,14 +35,14 @@ namespace UI
                 }
                 catch
                 {
-                    // If image loading fails, show placeholder
+                    
                     CoverImage.Visibility = Visibility.Collapsed;
                     PlaceholderText.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                // No cover image - show placeholder
+               
                 CoverImage.Visibility = Visibility.Collapsed;
                 PlaceholderText.Visibility = Visibility.Visible;
             }
@@ -62,7 +62,7 @@ namespace UI
                 var selectedPath = dialog.FileName;
                 if (File.Exists(selectedPath))
                 {
-                    // Copy the image to the application data folder for the playlist
+                    
                     var appDataPath = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "MusicPlayer", "PlaylistCovers"
@@ -75,7 +75,7 @@ namespace UI
                     var newFileName = $"playlist_{DateTime.Now:yyyyMMdd_HHmmss}_{fileName}";
                     var newFilePath = Path.Combine(appDataPath, newFileName);
                     
-                    // Copy the image file to the app data folder
+                    
                     File.Copy(selectedPath, newFilePath, true);
                     
                     CoverImagePath = newFilePath;

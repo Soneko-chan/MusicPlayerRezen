@@ -11,7 +11,7 @@ namespace Domain
         public float TrackDuration { get; set; }
         public string? CoverPath { get; set; }
 
-        // Navigation properties
+        
         public virtual Artist? Artist { get; set; }
         public virtual Album? Album { get; set; }
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();
